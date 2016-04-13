@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Resources">
+        <file alias="clock">resources/clock.png</file>
+        <file alias="network">resources/network.png</file>
+        <file alias="refresh">resources/Refresh.png</file>
+        <file alias="save">resources/Save.png</file>
+    </qresource>
+</RCC>
