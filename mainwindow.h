@@ -16,6 +16,7 @@ public:
     ~MainWindow();
 public slots:
    void valueChanged();
+   void clickFunc();
 private:
     Ui::MainWindow *ui;
 };

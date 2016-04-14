@@ -13,7 +13,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->comboBox->addItem(QIcon(":/Resources/refresh"),"Database");
     ui->comboBox->addItem(QIcon(":/Resources/network"),"Network");
 
+    ui->commandLinkButton->setText("Vision");
+
     connect(ui->comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(valueChanged()));
+    connect(ui->commandLinkButton,SIGNAL(clicked(bool)),this,SLOT(clickFunc()));
 
 }
 
@@ -31,5 +34,10 @@ void MainWindow::valueChanged()
     qDebug()<<"Current ComboBox text"<<str;
     qDebug()<<"Total Item:"<<ui->comboBox->count();
     ui->comboBox->removeItem(3);
+
+}
+void MainWindow::clickFunc()
+{
+    qDebug()<<"Clicked the Button";
 
 }
