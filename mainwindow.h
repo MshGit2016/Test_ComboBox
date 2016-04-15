@@ -2,7 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QDate>
+#include <QDateEdit>
+#include <QMap>
 namespace Ui {
 class MainWindow;
 }
@@ -14,6 +16,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    QMap<int,QVector<QString>> m_stringList;
 public slots:
    void valueChanged();
    void clickFunc();
