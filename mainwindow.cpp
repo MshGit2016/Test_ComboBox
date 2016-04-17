@@ -43,6 +43,50 @@ MainWindow::MainWindow(QWidget *parent) :
     m_stringList.insert(id,str);
 
     qDebug()<<m_stringList[id][0]<<" 1="<<m_stringList[id][1].toInt()<<" 3="<<m_stringList[id][3].toFloat();
+    ui->pushButton->setText("Frame button 1");
+    ui->pushButton->setGeometry(60,520,111,31);
+
+    connect(ui->pushButton,SIGNAL(clicked(bool)),this,SLOT(btn_click()));
+    connect(ui->pushButton,SIGNAL(pressed()),this,SLOT(btn_pressed()));
+    connect(ui->pushButton,SIGNAL(released()),this,SLOT(btn_released()));
+
+    QFocusFrame *btn_frame=new QFocusFrame(this);
+    btn_frame->setWidget(ui->pushButton);
+    btn_frame->setAutoFillBackground(true);
+
+
+    ui->fontComboBox->setFontFilters(QFontComboBox::AllFonts);
+
+    connect(ui->fontComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(changedIndex(int)));
+    connect(ui->fontComboBox,SIGNAL(currentFontChanged(QFont)),this,SLOT(changedFont(const QFont &)));
+    QPixmap pix=QPixmap(":/Resources/refresh");
+//    ui->label->setPixmap(pix);
+
+    menu[0]=new QMenu("File");
+    menu[0]->addAction("Edit");
+    menu[0]->addAction("View");
+    menu[0]->addAction("Tools");
+
+    act[0]=new QAction("New",this);
+    act[0]->setShortcut(Qt::CTRL|Qt::Key_A);
+    act[0]->setStatusTip("This is a New menu");
+
+    act[1]=new QAction("Open",this);
+    act[1]->setCheckable(true);
+
+    menu[1]=new QMenu("Save");
+    menu[1]->addAction(act[0]);
+    menu[1]->addAction(act[1]);
+
+    menu[2]=new QMenu("Print");
+    menu[2]->addAction("Page Setup");
+    menu[2]->addMenu(menu[1]);
+
+
+    menubar=new QMenuBar(this);
+    menubar->addMenu(menu[0]);
+    menubar->addMenu(menu[2]);
+    connect(menubar,SIGNAL(triggered(QAction*)),this,SLOT(trigerMenu(QAction*)));
 
 }
 
@@ -66,4 +110,36 @@ void MainWindow::clickFunc()
 {
     qDebug()<<"Clicked the Button";
 
+}
+void MainWindow::btn_click()
+{
+    qDebug()<<"Button click";
+}
+void MainWindow::btn_pressed()
+{
+    qDebug()<<"Button pressed!";
+}
+void MainWindow::btn_released()
+{
+    qDebug()<<"Button released.";
+}
+void MainWindow::changedIndex(int idx)
+{
+   qDebug()<<"Index="<<ui->fontComboBox->currentIndex()<<"idx=="<<idx;
+
+
+}
+void MainWindow::changedFont(const QFont &f)
+{
+    qDebug()<<"current font:"<<ui->fontComboBox->currentText();
+
+    ui->pushButton_2->setFont(f);
+    ui->dateEdit->setFont(f);
+    ui->label->setFont(f);
+
+}
+void MainWindow::trigerMenu(QAction *act)
+{
+    QString str=QString("Select Menu :%1").arg(act->text());
+    ui->label->setText(str);
 }
